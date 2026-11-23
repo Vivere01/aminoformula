@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>America's Top Anti-Aging Doctor — Reverse Muscle Wasting As You Age</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background: #f2f2f2;
+    color: #333;
+    border-top: 6px solid #7ab648;
+  }
+
+  /* ---------- HERO / TITLE + VIDEO ---------- */
+  .hero {
+    background: #fff;
+    padding: 36px 16px 30px;
+    text-align: center;
+  }
+  .hero h1 {
+    max-width: 900px;
+    margin: 0 auto 26px;
+    font-size: clamp(24px, 3.4vw, 40px);
+    line-height: 1.25;
+    font-weight: 800;
+    color: #143b5e;
+  }
+  .hero h1 .quote { color: #c0392b; }
+
+  .video-wrap {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    background: #000;
+    box-shadow: 0 8px 30px rgba(0,0,0,.25);
+  }
+  .video-wrap video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .video-hint {
+    font-size: 13px;
+    color: #777;
+    margin-top: 10px;
+  }
+
+  /* ---------- CTA BUTTON ---------- */
+  .cta-wrap { text-align: center; padding: 26px 16px 6px; }
+  .btn-next {
+    display: inline-block;
+    background: linear-gradient(#d98218, #b4650c);
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 12px 54px;
+    border: 1px solid #96540a;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  }
+  .btn-next:hover { filter: brightness(1.08); }
+
+  /* ---------- SCIENTIFIC REFERENCES ---------- */
+  .refs {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 34px 16px 44px;
+    text-align: center;
+  }
+  .refs h2 {
+    font-size: 26px;
+    color: #4a4a4a;
+    margin-bottom: 26px;
+  }
+  .ref-logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 34px;
+    margin-bottom: 34px;
+  }
+  .ref-logos span { font-weight: 800; font-size: 22px; letter-spacing: -.5px; }
+  .logo-jbmr { color: #11a9e0; font-style: italic; }
+  .logo-springer { color: #000; font-size: 17px !important; }
+  .logo-springer b { color: #000; }
+  .logo-sciencedirect { color: #000; }
+  .logo-sciencedirect i { color: #ec6c00; font-style: normal; }
+  .logo-pubmed { color: #3366cc; font-style: italic; }
+  .logo-pubmed b { color: #3366cc; font-style: normal; }
+
+  .ref-list {
+    display: inline-block;
+    text-align: left;
+    font-size: 13px;
+    font-style: italic;
+    color: #444;
+    line-height: 1.85;
+    counter-reset: ref;
+    list-style: none;
+  }
+  .ref-list li::before {
+    counter-increment: ref;
+    content: counter(ref) ". ";
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* ---------- ABOUT THE DOCTOR ---------- */
+  .about {
+    background: linear-gradient(135deg, #123c63 0%, #0e5a86 55%, #14618f 100%);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .about::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 30h60M30 0v60M0 0l60 60M60 0L0 60' stroke='rgba(255,255,255,0.05)' fill='none'/%3E%3C/svg%3E");
+    opacity: .5;
+  }
+  .about-inner {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 44px 16px;
+    display: flex;
+    align-items: flex-end;
+    gap: 34px;
+  }
+  .about-inner .photo {
+    flex: 0 0 300px;
+    max-width: 40%;
+  }
+  .about-inner .photo img { width: 100%; height: auto; display: block; }
+  .about-text { flex: 1; padding-bottom: 18px; }
+  .about-text h2 { font-size: 30px; margin-bottom: 22px; }
+  .about-text p { font-size: 17px; line-height: 1.55; font-weight: 600; }
+
+  /* ---------- DISCLAIMERS ---------- */
+  .disclaimers {
+    background: #f2f2f2;
+    padding: 40px 16px;
+  }
+  .disclaimers-inner { max-width: 900px; margin: 0 auto; }
+  .disclaimers h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #4a4a4a;
+    margin-bottom: 26px;
+  }
+  .disclaimers ul { padding-left: 34px; }
+  .disclaimers li {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 10px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    background: #1c4d75;
+    color: #fff;
+    padding: 24px 16px;
+  }
+  .footer-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .footer a { color: #fff; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-links { margin-top: 12px; }
+  .footer-links a + a::before {
+    content: "|";
+    margin: 0 10px;
+    opacity: .7;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .footer-addr { text-align: right; }
+
+  /* ---------- TRUST BADGES ---------- */
+  .badges {
+    background: #fff;
+    padding: 18px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 800;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: #333;
+    background: #fafafa;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .badge.norton { color: #f0b323; }
+  .badge.bbb { background: #0056a4; color: #fff; border-color: #0056a4; }
+  .badge.visa { color: #1a1f71; font-size: 16px; font-style: italic; }
+  .badge.mc { color: #eb001b; font-size: 15px; }
+  .badge.disc { color: #f76b1c; font-size: 13px; }
+  .badge.amex { background: #2e77bc; color: #fff; border-color: #2e77bc; }
+
+  @media (max-width: 720px) {
+    .about-inner { flex-direction: column; align-items: center; text-align: left; }
+    .about-inner .photo { max-width: 260px; flex: none; }
+    .footer-addr { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- TÍTULO + VÍDEO -->
+  <section class="hero">
+    <h1>America&rsquo;s Top Anti-Aging Doctor:<br>
+      <span class="quote">&ldquo;Do THIS To Reverse Muscle Wasting As You Age&hellip;&rdquo;</span>
+    </h1>
+
+    <div class="video-wrap">
+      <video id="vsl" controls autoplay muted playsinline preload="metadata"
+             poster="frank-pic.png">
+        <source src="VSL%20-%20AMINOFORMULA.mp4" type="video/mp4">
+        Seu navegador n&atilde;o suporta o v&iacute;deo.
+      </video>
+    </div>
+    <p class="video-hint">O v&iacute;deo inicia automaticamente (sem som). Ative o som para melhor experi&ecirc;ncia.</p>
+  </section>
+
+  <!-- BOTÃO NEXT STEP -->
+  <div class="cta-wrap">
+    <a class="btn-next" href="#next-step">Next Step</a>
+  </div>
+
+  <!-- REFERÊNCIAS CIENTÍFICAS -->
+  <section class="refs">
+    <h2>Scientific References</h2>
+    <div class="ref-logos">
+      <span class="logo-jbmr">JBMR</span>
+      <span class="logo-springer">SPRINGER <b>NATURE</b> Link</span>
+      <span class="logo-sciencedirect">Science<i>Direct</i></span>
+      <span class="logo-pubmed">Pu<b>B</b>Med</span>
+    </div>
+    <ol class="ref-list">
+      <li>Adv Ther. 2003 Sep-Oct;20(5):270-81.</li>
+      <li>Adv Ther. 2003 Sep-Oct;20(5):282-91.</li>
+      <li>J Bone Miner Res. 2000 Dec;15(12):2504-12.</li>
+      <li>Am J Clin Nutr. 2008 May;87(5):1554S-1557S.</li>
+      <li>Adv Ther. 2003 Jul-Aug;20(4):195-202.</li>
+      <li>Adv Ther. 2003 Jul-Aug;20(4):203-10.</li>
+    </ol>
+  </section>
+
+  <!-- SOBRE O DOUTOR -->
+  <section class="about">
+    <div class="about-inner">
+      <div class="photo">
+        <img src="frank-pic.png" alt="Dr. Frank Shallenberger">
+      </div>
+      <div class="about-text">
+        <h2>About Dr. Shallenberger</h2>
+        <p>Dr. Frank Shallenberger is the Editor-in-Chief of Second Opinion Newsletter and Second Opinion Health Alert. Dr. Shallenberger earned his medical degree from the University of Maryland School of Medicine and received his postgraduate training at Mt. Zion Hospital in San Francisco. Dr. Shallenberger is board certified by the American Board of Anti-Aging Medicine and has been practicing medicine for over 44 years.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMERS -->
+  <section class="disclaimers">
+    <div class="disclaimers-inner">
+      <h2>Disclaimers</h2>
+      <ul>
+        <li>Dr. Frank Shallenberger is compensated by Advanced Bionutritionals for his work in formulating and endorsing this product.</li>
+        <li>These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, cure, or prevent a disease.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div>Copyright &copy; 2025 Advanced Bionutritionals, LLC.</div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+          <a href="#">Do Not Sell Info</a>
+          <a href="#">CA Privacy Rights</a>
+          <a href="#">Return Policy</a>
+        </div>
+      </div>
+      <div class="footer-addr">5305 Oakbrook Parkway, Norcross, Georgia 30093</div>
+    </div>
+  </footer>
+
+  <!-- BADGES -->
+  <div class="badges">
+    <span class="badge norton">&#10004; Norton<br>Secured</span>
+    <span class="badge bbb">BBB &nbsp;ACCREDITED<br>BUSINESS</span>
+    <span class="badge visa">VISA</span>
+    <span class="badge mc">&#9679;&#9679; MasterCard</span>
+    <span class="badge disc">DISCOVER</span>
+    <span class="badge amex">AMERICAN<br>EXPRESS</span>
+  </div>
+
+  <script>
+    // Autoplay: navegadores só permitem autoplay sem som (muted).
+    // Após o primeiro clique/interação, tenta liberar o som.
+    var v = document.getElementById('vsl');
+    function tryPlay() {
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){});
+    }
+    tryPlay();
+    document.addEventListener('click', function once() {
+      if (v.muted && v.currentTime > 0) {
+        // mantém muted por segurança; usuário pode ativar pelo controle
+      }
+      document.removeEventListener('click', once);
+    });
+  </script>
+
+</body>
+</html>
