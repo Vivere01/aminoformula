@@ -217,11 +217,10 @@
     </h1>
 
     <div class="video-wrap">
-      <video id="vsl" controls autoplay muted playsinline preload="metadata"
-             poster="frank-pic.png">
-        <source src="VSL%20-%20AMINOFORMULA.mp4" type="video/mp4">
-        Seu navegador n&atilde;o suporta o v&iacute;deo.
-      </video>
+      <iframe id="vsl-frame" src="https://drive.google.com/file/d/19nqfJWcvAfPjvmETpNV3z_blXj-CDa6u/preview"
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowfullscreen frameborder="0"
+              style="width:100%; aspect-ratio:16/9; display:block; border:0;"></iframe>
     </div>
     <p class="video-hint">The video starts automatically (muted). Turn on the sound for the best experience.</p>
   </section>
@@ -297,20 +296,7 @@
   </div>
 
   <script>
-    // Autoplay: navegadores só permitem autoplay sem som (muted).
-    // Após o primeiro clique/interação, tenta liberar o som.
-    var v = document.getElementById('vsl');
-    function tryPlay() {
-      var p = v.play();
-      if (p && p.catch) p.catch(function(){});
-    }
-    tryPlay();
-    document.addEventListener('click', function once() {
-      if (v.muted && v.currentTime > 0) {
-        // mantém muted por segurança; usuário pode ativar pelo controle
-      }
-      document.removeEventListener('click', once);
-    });
+    // Autoplay: o player do Google Drive inicia o vídeo automaticamente.
   </script>
 
 </body>
