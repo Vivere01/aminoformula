@@ -128,7 +128,10 @@ module.exports = async function handler(req, res) {
   const currencyRaw = get("currency") || "";
   const isTest = isTestFlag(get("is_test"));
   const gross = parseAmount(get("gross") || get("amount_brutto"));
-  const dryRun = String(get("dry_run") || "").toLowerCase() === "1";
+  const dryRun = String(get("dry_run") || "0").toLowerCase() === "1";
+  // Temporary switch: lets a Digistore24 TEST order become a conversion so the
+  // full chain can be validated. Remove `&allow_test=1` from the postback URL after.
+  const allowTest = String(get("allow_test") || "0").toLowerCase() === "1";
 
   const status = normalizeStatus(rawStatus);
   const revenue = parseAmount(revenueRaw);
@@ -169,10 +172,13 @@ module.exports = async function handler(req, res) {
     log.decisions.cid_decoded = false;
   }
 
-  /* --- test transactions never become conversions --- */
-  if (isTest) {
+  /* --- test transactions never become conversions (unless allow_test=1) --- */
+  if (isTest && !allowTest) {
     log.decisions.action = "skipped_test_transaction";
     return res.status(200).json(log);
+  }
+  if (isTest && allowTest) {
+    log.decisions.was_test = true;
   }
 
   /* --- refunds / chargebacks: recorded, never counted as a sale --- */

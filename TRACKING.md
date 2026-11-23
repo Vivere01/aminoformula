@@ -41,10 +41,12 @@ Where the label came from: Google Ads → **Goals → Conversions** → the conv
 Affiliate dashboard → **Sales & partners → Integrations → S2S postback**:
 
 ```
-https://<your-domain>/api/digistore-postback?click_id={cid}&revenue={amount_affiliate}&status={transaction_type}&transaction_id={transaction_id}&currency={currency}&is_test={is_test}
+https://www.confere.sbs/api/digistore-postback?click_id={cid}&revenue={amount_affiliate}&status={transaction_type}&transaction_id={transaction_id}&currency={currency}&is_test={is_test}&allow_test=1
 ```
 
 `{cid}` is returned automatically because every checkout link carries `cid=…`.
+
+> **`&allow_test=1` is a temporary validation switch.** Digistore24 flags its own test orders with `is_test`, which the route skips on purpose (a test purchase must never count as a sale). Keep `allow_test=1` while you validate, then **remove it from the URL and re-save** in Digistore24.
 
 ## Postback behaviour (verified by 22 unit tests + local HTTP e2e)
 
@@ -53,7 +55,7 @@ https://<your-domain>/api/digistore-postback?click_id={cid}&revenue={amount_affi
 | `status = payment`, valid `cid` with gclid | `conversion_sent` → Google Ads |
 | duplicate `transaction_id` | `skipped_duplicate` (in-instance guard + `oid` on Google's side) |
 | `status = refund` / `chargeback` | `skipped_refund` / `skipped_chargeback` — never counted as a sale |
-| `is_test = 1` | `skipped_test_transaction` |
+| `is_test = 1` | `skipped_test_transaction` (unless `allow_test=1`, then it converts) |
 | other statuses (rebill, …) | `skipped_status_*` |
 | `cid` with no click id (direct visit) | `recorded_only_no_click_id` — can't attribute to an ad click |
 | env vars unset | falls back to `AW-18570108057` / `G6UgCNuAk74dEJm59ZZF` |
@@ -78,7 +80,9 @@ Click ids: last click wins. UTMs: first touch is kept. UTM block is dropped auto
 
 ## Test procedure (production)
 
-1. Deploy (the fallback ID/label are already in the code — no env var required).
-2. Create a conversion action in test mode or use the Google Ads **"Test" mode** / a real test purchase — Digistore24 test orders are deliberately skipped (`is_test`), so use Digistore24's **test payment with a real gclid** only if you want it counted, otherwise verify via `dry_run=1` + the response `google_url`.
-3. Verify in Google Ads → **Tools → Diagnostics / Conversions → "View recent conversions"** that the hit appears with the right value.
-4. GTM **Preview** mode → confirm `page_view`, `vsl_view`, `offer_click`.
+1. **Local chain** — already covered by `25` unit tests + HTTP e2e (payment, duplicate, refund, chargeback, test order, missing params, comma decimals, POST body).
+2. **Production route** — `GET /api/digistore-postback?...&dry_run=1` returns HTTP 200 with the exact `google_url` that would be sent (ID `18570108057`, label `G6UgCNuAk74dEJm59ZZF`, `value`, `currency_code`, `gclid`, `oid`).
+3. **Production page** — open `https://www.confere.sbs/?gclid=<real-gclid>`: all 3 links carry a `cid` (~200 chars), `dataLayer` gets `page_view`, `vsl_view` and `offer_click`, `tracking.js` returns 200, no console errors.
+4. **End-to-end** — with `&allow_test=1` in the Digistore24 postback URL, run a Digistore24 test purchase while visiting the page through a real Google Ads click (so a real `gclid` is captured). The postback arrives → `conversion_sent` → check **Google Ads → Tools → Conversions → "View recent conversions"** for the hit with the right value.
+5. **GTM Preview** — confirm `page_view`, `vsl_view`, `offer_click` fire on the triggers you created.
+6. **After validation** — remove `&allow_test=1` from the Digistore24 postback URL and re-save.
