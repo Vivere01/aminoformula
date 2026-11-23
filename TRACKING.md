@@ -28,13 +28,13 @@ Set them in Vercel → Project → Settings → Environment Variables (Productio
 
 | Variable | Value | Required |
 |---|---|---|
-| `GOOGLE_ADS_CONVERSION_ID` | `AW-18570108057` | yes |
-| `GOOGLE_ADS_CONVERSION_LABEL` | the label of your "Import click conversions" action | **yes — not set yet** |
+| `GOOGLE_ADS_CONVERSION_ID` | `AW-18570108057` | optional — the same value is the code fallback |
+| `GOOGLE_ADS_CONVERSION_LABEL` | `G6UgCNuAk74dEJm59ZZF` | optional — the same value is the code fallback |
 | `GOOGLE_ADS_CURRENCY` | `USD` (fallback; `{currency}` from Digistore24 wins) | optional |
 
-Where to find the label: Google Ads → **Goals → Conversions → Conversions** → create/select a conversion action with **Source = "Import" → "Track conversions from clicks"**, then open the tag and copy the **Conversion label** (a ~10-character string, not the `AW-` ID).
+The env vars **override** the fallbacks, so nothing has to be set for the postback to start converting. Set them only if the conversion action ever changes.
 
-Without the label the postback still returns `200` and logs `recorded_only_missing_google_config` — no conversion is sent, nothing breaks.
+Where the label came from: Google Ads → **Goals → Conversions** → the conversion action created via **Source = "Import" → "Track conversions from clicks"**; its tag shows `send_to: AW-18570108057/G6UgCNuAk74dEJm59ZZF` — `G6UgCNuAk74dEJm59ZZF` is the label.
 
 ## Digistore24 postback URL
 
@@ -55,8 +55,8 @@ https://<your-domain>/api/digistore-postback?click_id={cid}&revenue={amount_affi
 | `status = refund` / `chargeback` | `skipped_refund` / `skipped_chargeback` — never counted as a sale |
 | `is_test = 1` | `skipped_test_transaction` |
 | other statuses (rebill, …) | `skipped_status_*` |
-| no `GOOGLE_ADS_CONVERSION_LABEL` | `recorded_only_missing_google_config` |
 | `cid` with no click id (direct visit) | `recorded_only_no_click_id` — can't attribute to an ad click |
+| env vars unset | falls back to `AW-18570108057` / `G6UgCNuAk74dEJm59ZZF` |
 | missing `click_id` or `status` | HTTP `400` with the reason |
 | `dry_run=1` | returns the exact `google_url` without calling Google |
 
@@ -78,7 +78,7 @@ Click ids: last click wins. UTMs: first touch is kept. UTM block is dropped auto
 
 ## Test procedure (production)
 
-1. Deploy, set `GOOGLE_ADS_CONVERSION_LABEL`.
+1. Deploy (the fallback ID/label are already in the code — no env var required).
 2. Create a conversion action in test mode or use the Google Ads **"Test" mode** / a real test purchase — Digistore24 test orders are deliberately skipped (`is_test`), so use Digistore24's **test payment with a real gclid** only if you want it counted, otherwise verify via `dry_run=1` + the response `google_url`.
 3. Verify in Google Ads → **Tools → Diagnostics / Conversions → "View recent conversions"** that the hit appears with the right value.
 4. GTM **Preview** mode → confirm `page_view`, `vsl_view`, `offer_click`.

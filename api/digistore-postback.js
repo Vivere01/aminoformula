@@ -198,9 +198,12 @@ module.exports = async function handler(req, res) {
     return res.status(200).json(log);
   }
 
-  /* --- Google Ads config --- */
-  const conversionId = numericConversionId(process.env.GOOGLE_ADS_CONVERSION_ID);
-  const label = process.env.GOOGLE_ADS_CONVERSION_LABEL;
+  /* --- Google Ads config --- (env var wins, code fallback keeps prod working) --- */
+  const conversionId =
+    numericConversionId(process.env.GOOGLE_ADS_CONVERSION_ID) ||
+    numericConversionId("AW-18570108057");
+  const label =
+    process.env.GOOGLE_ADS_CONVERSION_LABEL || "G6UgCNuAk74dEJm59ZZF";
   const currency =
     (currencyRaw && String(currencyRaw).trim().toUpperCase()) ||
     process.env.GOOGLE_ADS_CURRENCY ||
