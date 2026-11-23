@@ -47,6 +47,116 @@
     margin-top: 10px;
   }
 
+  /* ---------- PRICING CARD ---------- */
+  .pricing {
+    background: #fff;
+    padding: 34px 16px 40px;
+  }
+  .pricing h2 {
+    text-align: center;
+    font-size: clamp(22px, 2.6vw, 30px);
+    color: #143b5e;
+    margin-bottom: 6px;
+  }
+  .pricing .sub {
+    text-align: center;
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+  .plans {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .plan {
+    flex: 1 1 260px;
+    max-width: 330px;
+    background: #fff;
+    border: 2px solid #d9dee3;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .plan:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,.14); }
+  .plan.featured { border-color: #c0392b; box-shadow: 0 8px 24px rgba(192,57,43,.18); }
+  .plan-tag {
+    background: #143b5e;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 9px 8px;
+  }
+  .plan.featured .plan-tag { background: #c0392b; }
+  .plan-body { padding: 22px 18px 24px; display: flex; flex-direction: column; flex: 1; }
+  .plan h3 { font-size: 21px; color: #222; margin-bottom: 4px; }
+  .plan .qty { font-size: 14px; color: #777; margin-bottom: 14px; }
+  .bottle { margin: 0 auto 14px; display: block; height: 150px; width: auto; }
+  .plan .price {
+    font-size: 34px;
+    font-weight: 800;
+    color: #143b5e;
+    line-height: 1.1;
+  }
+  .plan .price small { font-size: 15px; font-weight: 600; color: #777; }
+  .plan .total { font-size: 14px; color: #555; margin: 6px 0 4px; }
+  .plan .save {
+    display: inline-block;
+    background: #eaf7ee;
+    color: #1e8e4a;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin: 8px auto 14px;
+  }
+  .plan .ship {
+    font-size: 13px;
+    font-weight: 700;
+    color: #143b5e;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 16px;
+  }
+  .btn-buy {
+    margin-top: auto;
+    display: block;
+    background: linear-gradient(#d98218, #b4650c);
+    color: #fff;
+    font-weight: 800;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 13px 10px;
+    border-radius: 6px;
+    border: 1px solid #96540a;
+    box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  }
+  .btn-buy:hover { filter: brightness(1.08); }
+  .plan .pay {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+  }
+  .plan .pay img { height: 26px; width: auto; display: block; }
+  .guarantee {
+    text-align: center;
+    max-width: 720px;
+    margin: 26px auto 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
   /* ---------- SCIENTIFIC REFERENCES ---------- */
   .refs {
     max-width: 1000px;
@@ -226,6 +336,62 @@
               style="width:100%; aspect-ratio:16/9; display:block; border:0;"></iframe>
     </div>
     <p class="video-hint">The video starts automatically (muted). Turn on the sound for the best experience.</p>
+  </section>
+
+  <!-- CARD DE OFERTAS -->
+  <section class="pricing" id="offers">
+    <h2>Choose Your Amino Formula Package</h2>
+    <p class="sub">Exclusive online pricing &mdash; free shipping on 3 and 6 bottle packages</p>
+
+    <div class="plans">
+      <!-- 1 BOTÃO / 1 POTE -->
+      <div class="plan">
+        <div class="plan-tag">Sample Option</div>
+        <div class="plan-body">
+          <h3>1 Bottle</h3>
+          <div class="qty">30-day supply</div>
+          <img class="bottle" src="1bottle.jpg" alt="1 bottle of Advanced Amino Formula">
+          <div class="price">$39.95<small>/bottle</small></div>
+          <div class="total">Total: $39.95</div>
+          <a class="btn-buy" href="https://www.digistore24.com/product/472629?aff=MatheusOliveriaAbreu&cam=CAMPAIGNKEY&ga_cid=345448832.1794604368&ga_sid=1795458037" target="_blank" rel="noopener">Add To Cart</a>
+          <div class="pay"><img src="credit.png" alt="VISA, MasterCard, American Express, Discover"></div>
+        </div>
+      </div>
+
+      <!-- 6 POTES -->
+      <div class="plan featured">
+        <div class="plan-tag">Biggest Savings</div>
+        <div class="plan-body">
+          <h3>6 Bottles</h3>
+          <div class="qty">180-day supply</div>
+          <img class="bottle" src="6bottle.png" alt="6 bottles of Advanced Amino Formula">
+          <div class="price">$33.35<small>/bottle</small></div>
+          <div class="save">Save $39.60</div>
+          <div class="ship">&#128666; Free Shipping</div>
+          <div class="total">Total: $200.10</div>
+          <a class="btn-buy" href="https://www.digistore24.com/product/472943?aff=MatheusOliveriaAbreu&cam=CAMPAIGNKEY&ga_cid=345448832.1794604368&ga_sid=1795458037" target="_blank" rel="noopener">Add To Cart</a>
+          <div class="pay"><img src="credit.png" alt="VISA, MasterCard, American Express, Discover"></div>
+        </div>
+      </div>
+
+      <!-- 3 POTES -->
+      <div class="plan">
+        <div class="plan-tag">Most Popular</div>
+        <div class="plan-body">
+          <h3>3 Bottles</h3>
+          <div class="qty">90-day supply</div>
+          <img class="bottle" src="3bottle.jpg" alt="3 bottles of Advanced Amino Formula">
+          <div class="price">$35.95<small>/bottle</small></div>
+          <div class="save">Save $12.00</div>
+          <div class="ship">&#128666; Free Shipping</div>
+          <div class="total">Total: $107.85</div>
+          <a class="btn-buy" href="https://www.digistore24.com/product/472942?aff=MatheusOliveriaAbreu&cam=CAMPAIGNKEY&ga_cid=345448832.1794604368&ga_sid=1795458037" target="_blank" rel="noopener">Add To Cart</a>
+          <div class="pay"><img src="credit.png" alt="VISA, MasterCard, American Express, Discover"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="guarantee">&#128737; 100% Satisfaction Guaranteed &mdash; 90-day money-back refund policy. Orders ship directly from our warehouse.</p>
   </section>
 
   <!-- REFERÊNCIAS CIENTÍFICAS -->
