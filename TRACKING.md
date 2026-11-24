@@ -10,12 +10,26 @@ Stack: GTM `GTM-TSJ327HZ` (page events) · Digistore24 S2S postback → `/api/di
 | `api/digistore-postback.js` | Vercel serverless route. Decodes `cid`, validates, dedupes by `transaction_id`, sends the conversion to Google Ads. |
 | `index.html` | Loads `tracking.js` (defer) and tags each button with `data-offer`. Design untouched. |
 
+## Domains
+
+| URL | Status |
+|---|---|
+| `https://www.aminoformula.confere.sbs/` | **Production — use this everywhere** (Google Ads final URL, postback, creatives) |
+| `https://aminoformula.confere.sbs/` (no `www`) | ❌ does not resolve — always use `www.` |
+| `https://www.confere.sbs/` | Previous domain, still live, serves the same app |
+
+Nothing in the code hardcodes a domain: `tracking.js` reads `window.location`, so it works on any host.
+
+**Attribution is first-party per origin** (localStorage + cookie). A `gclid` stored on `www.confere.sbs` is *not* readable from `www.aminoformula.confere.sbs`. Point every ad at the production domain so the click id is always captured on the same origin the purchase happens from.
+
+When the Digistore24 postback host changes, only that field in Digistore24 changes — the path and query stay identical.
+
 ## GTM dataLayer events
 
 | Event | When | Parameters |
 |---|---|---|
 | `page_view` | Page load | `page_location`, `page_title` |
-| `vsl_view` | Video iframe ≥50% visible (once) | `video_platform`, `video_id` |
+| `vsl_view` | Vturb player ≥50% visible (once, measured geometrically) | `video_platform` = `vturb`, `video_id` = `6b0592741cb3c104e5e6368a` |
 | `offer_click` | Button click | `offer_id` = `1bottle` / `3bottle` / `6bottle`, `offer_label` |
 
 > `offer_click` is a click only. **Purchases never come from the page** — only from the S2S postback.
@@ -41,7 +55,7 @@ Where the label came from: Google Ads → **Goals → Conversions** → the conv
 Affiliate dashboard → **Sales & partners → Integrations → S2S postback**:
 
 ```
-https://www.confere.sbs/api/digistore-postback?click_id={cid}&revenue={amount_affiliate}&status={transaction_type}&transaction_id={transaction_id}&currency={currency}&is_test={is_test}&allow_test=1
+https://www.aminoformula.confere.sbs/api/digistore-postback?click_id={cid}&revenue={amount_affiliate}&status={transaction_type}&transaction_id={transaction_id}&currency={currency}&is_test={is_test}&allow_test=1
 ```
 
 `{cid}` is returned automatically because every checkout link carries `cid=…`.
@@ -82,7 +96,7 @@ Click ids: last click wins. UTMs: first touch is kept. UTM block is dropped auto
 
 1. **Local chain** — already covered by `25` unit tests + HTTP e2e (payment, duplicate, refund, chargeback, test order, missing params, comma decimals, POST body).
 2. **Production route** — `GET /api/digistore-postback?...&dry_run=1` returns HTTP 200 with the exact `google_url` that would be sent (ID `18570108057`, label `G6UgCNuAk74dEJm59ZZF`, `value`, `currency_code`, `gclid`, `oid`).
-3. **Production page** — open `https://www.confere.sbs/?gclid=<real-gclid>`: all 3 links carry a `cid` (~200 chars), `dataLayer` gets `page_view`, `vsl_view` and `offer_click`, `tracking.js` returns 200, no console errors.
+3. **Production page** — open `https://www.aminoformula.confere.sbs/?gclid=<real-gclid>`: all 3 links carry a `cid` (~200 chars), `dataLayer` gets `page_view`, `vsl_view` and `offer_click`, `tracking.js` returns 200, no console errors.
 4. **End-to-end** — with `&allow_test=1` in the Digistore24 postback URL, run a Digistore24 test purchase while visiting the page through a real Google Ads click (so a real `gclid` is captured). The postback arrives → `conversion_sent` → check **Google Ads → Tools → Conversions → "View recent conversions"** for the hit with the right value.
 5. **GTM Preview** — confirm `page_view`, `vsl_view`, `offer_click` fire on the triggers you created.
 6. **After validation** — remove `&allow_test=1` from the Digistore24 postback URL and re-save.
