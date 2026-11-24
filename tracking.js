@@ -165,15 +165,17 @@
   }
 
   function trackVslView() {
-    var iframe = document.querySelector(".video-wrap iframe");
-    if (!iframe) return;
+    var player = document.querySelector(
+      ".video-wrap vturb-smartplayer, .video-wrap .vturb-player-placeholder, .video-wrap iframe"
+    );
+    if (!player) return;
     var fired = false;
     function fire() {
       if (fired) return;
       fired = true;
       dl("vsl_view", {
-        video_platform: "youtube",
-        video_id: "mcHZtyk7Cew"
+        video_platform: "vturb",
+        video_id: "6b0592741cb3c104e5e6368a"
       });
     }
     if ("IntersectionObserver" in window) {
@@ -188,7 +190,7 @@
         },
         { threshold: 0.5 }
       );
-      io.observe(iframe);
+      io.observe(player);
     } else {
       fire();
     }
