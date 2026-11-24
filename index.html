@@ -61,18 +61,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     width: 100%;
     height: auto;
   }
-  .video-hint {
-    font-size: 13px;
-    color: #777;
-    margin-top: 10px;
-  }
-
   /* ---------- SELO DE GARANTIA ---------- */
   .guarantee-seal {
     display: block;
     width: clamp(76px, 9vw, 96px);
     height: auto;
-    margin: 18px auto 0;
+    /* equal gaps: 46px above, and -18 + hero pad 30 + pricing pad 34 = 46px below */
+    margin: 46px auto -18px;
     opacity: .94;
     filter: drop-shadow(0 3px 9px rgba(0,0,0,.22));
     transition: transform .2s ease, opacity .2s ease;
@@ -378,8 +373,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
          src="90%20dias%20garantia.webp"
          width="96" height="96"
          alt="90-day money back guarantee">
-
-    <p class="video-hint">The video starts automatically (muted). Turn on the sound for the best experience.</p>
   </section>
 
   <!-- CARD DE OFERTAS -->
