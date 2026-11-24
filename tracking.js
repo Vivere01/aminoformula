@@ -173,11 +173,32 @@
     function fire() {
       if (fired) return;
       fired = true;
+      window.removeEventListener("scroll", check);
+      window.removeEventListener("resize", check);
       dl("vsl_view", {
         video_platform: "vturb",
         video_id: "6b0592741cb3c104e5e6368a"
       });
     }
+    // Geometry check — IntersectionObserver can be throttled/unreliable in
+    // background or embedded browsing contexts, so measure the box directly.
+    function visibleEnough() {
+      var r = player.getBoundingClientRect();
+      if (r.height <= 0 || r.width <= 0) return false;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var vw = window.innerWidth || document.documentElement.clientWidth;
+      var visH = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+      var visW = Math.min(r.right, vw) - Math.max(r.left, 0);
+      return visH / r.height >= 0.5 && visW / r.width >= 0.5;
+    }
+    function check() {
+      if (visibleEnough()) fire();
+    }
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    setTimeout(check, 1000);
+    setTimeout(check, 3000);
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(
         function (entries) {
@@ -191,8 +212,6 @@
         { threshold: 0.5 }
       );
       io.observe(player);
-    } else {
-      fire();
     }
   }
 
